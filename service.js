@@ -1,43 +1,29 @@
- var request = require('request');
+const request = require('request-promise-native');
 
-function listeClient(callback) {
-   
-   
-    request('https://darssn.herokuapp.com/clients', { json: true }, function (err,res, body) {
-        if (err) { return console.log('Erreur', err); }
-        // body contient les données récupérées
-   
-        callback(body);
-    });
-}
+  class Service{
 
-function rechercheClient(nom,callback){
+    constructor(){}
 
-    request('https://darssn.herokuapp.com/clients?nom='+nom, { json: true }, function (err,res, body) {
-        if (err) { return console.log('Erreur', err); }
-        // body contient les données récupérées
-   
-        callback(body);
-    });
+   listeClient(){
 
-}
+        return request('https://darssn.herokuapp.com/clients', { json: true });
+           
+        
+   }
+    rechercheClient(nom){
 
-function creerClient(nom,prenom,callback){
+        return request(`https://darssn.herokuapp.com/clients?nom=${nom}`, { json: true });
+             
+        
+    }
 
+    creerClient(nom,prenom){
 
-    request.post('https://darssn.herokuapp.com/clients',{json :{"nom" : nom, "prenoms":prenom }} , function (err,res, body) {
+        return request.post('https://darssn.herokuapp.com/clients',{json :{"nom" : nom, "prenoms":prenom }}); 
 
-        if (err) { return console.log('Erreur', err); }
-        // body contient les données récupérées
-   
-      callback(body);
-    });
-
+         
+    }
 
 }
 
-
-
-exports.creerClient =creerClient ;
-exports.rechercheClient = rechercheClient ;
-exports.listeClient = listeClient;
+module.exports = Service;
