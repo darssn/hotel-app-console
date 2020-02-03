@@ -1,4 +1,4 @@
-const request = require('request-promise-native');
+import request from 'request-promise-native';
 
   class Service{
 
@@ -10,20 +10,23 @@ const request = require('request-promise-native');
            
         
    }
-    rechercheClient(nom){
+    rechercheClient(nom:string){
 
         return request(`https://darssn.herokuapp.com/clients?nom=${nom}`, { json: true });
              
         
     }
 
-    creerClient(nom,prenom){
+    creerClient(nom:string,prenom:string){
 
         return request.post('https://darssn.herokuapp.com/clients',{json :{"nom" : nom, "prenoms":prenom }}); 
+     
+    }
 
-         
+    dispoChambre(dateDebut :Date , dateFin :Date){
+        return request(`https://darssn.herokuapp.com/reservations?dateDebut=${dateDebut}&dateFin=${dateFin}`, { json: true });
     }
 
 }
 
-module.exports = Service;
+export {Service};
